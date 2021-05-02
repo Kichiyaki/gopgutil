@@ -1,4 +1,4 @@
-package sanitize
+package gopgutil
 
 import (
 	"github.com/Kichiyaki/goutil/strutil"
@@ -10,7 +10,7 @@ var (
 	orderRegex = regexp.MustCompile(`^[\p{L}_.]+$`)
 )
 
-func Order(order string) string {
+func SanitizeOrder(order string) string {
 	parts := strings.Split(strings.TrimSpace(order), " ")
 	length := len(parts)
 
@@ -34,10 +34,10 @@ func Order(order string) string {
 	return strings.ToLower(table+strutil.Underscore(column)) + " " + direction
 }
 
-func Orders(orders []string) []string {
+func SanitizeOrders(orders []string) []string {
 	var sanitizedOrders []string
 	for _, sort := range orders {
-		sanitized := Order(sort)
+		sanitized := SanitizeOrder(sort)
 		if sanitized != "" {
 			sanitizedOrders = append(sanitizedOrders, sanitized)
 		}
