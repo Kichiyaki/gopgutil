@@ -12,14 +12,14 @@ func init() {
 
 func TestOrderAppender_Apply(t *testing.T) {
 	t.Run("wrong relationName", func(t *testing.T) {
-		_, err := (&OrderAppender{Orders: []string{"testModel.story.user.id"}}).Apply(orm.NewQuery(nil, &testModel{}))
+		_, err := (OrderAppender{Orders: []string{"testModel.story.user.id"}}).Apply(orm.NewQuery(nil, &testModel{}))
 		if err != ErrRelationNotFound {
 			t.Errorf("expected \"%s\", got %v", ErrRelationNotFound, err)
 		}
 	})
 
 	t.Run("max depth level", func(t *testing.T) {
-		_, err := (&OrderAppender{Orders: []string{"testModel2.story.user.id"}, MaxDepth: 2}).Apply(orm.NewQuery(nil, &testModel{}))
+		_, err := (OrderAppender{Orders: []string{"testModel2.story.user.id"}, MaxDepth: 2}).Apply(orm.NewQuery(nil, &testModel{}))
 		if err == nil || !strings.Contains(err.Error(), "depth") {
 			t.Errorf("expected error about max depth level, got %v", err)
 		}
@@ -48,7 +48,7 @@ func TestOrderAppender_Apply(t *testing.T) {
 			},
 		}
 		for _, test := range tests {
-			q, err := (&OrderAppender{Orders: test.orders}).Apply(orm.NewQuery(nil, &testModel{}))
+			q, err := (OrderAppender{Orders: test.orders}).Apply(orm.NewQuery(nil, &testModel{}))
 			if err != nil {
 				t.Errorf("expected nil, got %s", err)
 			}

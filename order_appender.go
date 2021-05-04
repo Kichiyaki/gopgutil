@@ -12,7 +12,7 @@ type OrderAppender struct {
 	MaxDepth int
 }
 
-func (o *OrderAppender) Apply(q *orm.Query) (*orm.Query, error) {
+func (o OrderAppender) Apply(q *orm.Query) (*orm.Query, error) {
 	var orders []string
 	tableModel := q.TableModel()
 	if tableModel != nil {
