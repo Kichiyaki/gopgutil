@@ -37,6 +37,9 @@ func buildAliasFromRelationName(relations map[string]*orm.Relation, alias string
 	for name, relation := range relations {
 		if name == current {
 			next = relation.JoinTable.Relations
+			if next == nil {
+				next = make(map[string]*orm.Relation)
+			}
 			if alias != "" {
 				alias += "__"
 			}

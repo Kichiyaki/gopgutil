@@ -9,10 +9,9 @@ func init() {
 }
 
 func TestBuildAliasFromRelationName(t *testing.T) {
-	model := &testModel{}
 
 	t.Run("relation not found", func(t *testing.T) {
-		alias, err := BuildAliasFromRelationName(model, "TestUser")
+		alias, err := BuildAliasFromRelationName(&testModel{}, "TestUser")
 		if err != ErrRelationNotFound {
 			t.Errorf("Expected %v, got %v", ErrRelationNotFound, err)
 		}
@@ -22,7 +21,7 @@ func TestBuildAliasFromRelationName(t *testing.T) {
 	})
 
 	t.Run("deep relation not found", func(t *testing.T) {
-		alias, err := BuildAliasFromRelationName(model, "TestModel2.Story.Test2")
+		alias, err := BuildAliasFromRelationName(&testModel{}, "TestModel2.Story.Test2")
 		if err != ErrRelationNotFound {
 			t.Errorf("Expected %v, got %v", ErrRelationNotFound, err)
 		}
@@ -35,22 +34,31 @@ func TestBuildAliasFromRelationName(t *testing.T) {
 		tests := []struct {
 			relationName   string
 			expectedResult string
+			model          interface{}
 		}{
 			{
 				relationName:   "TestModel2",
 				expectedResult: "test_model2",
+				model:          &testModel{},
 			},
 			{
 				relationName:   "TestModel2.Story",
 				expectedResult: "test_model2__story",
+				model:          &testModel{},
 			},
 			{
 				relationName:   "TestModel2.Story.User",
 				expectedResult: "test_model2__story__user",
+				model:          &testModel{},
+			},
+			{
+				relationName:   "User",
+				expectedResult: "user",
+				model:          &story{},
 			},
 		}
 		for _, test := range tests {
-			alias, err := BuildAliasFromRelationName(model, test.relationName)
+			alias, err := BuildAliasFromRelationName(test.model, test.relationName)
 			if err != nil {
 				t.Errorf("Expected nil, got %v", err)
 			}
