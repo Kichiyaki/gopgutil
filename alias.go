@@ -8,5 +8,5 @@ func AddAliasToColumnName(column, alias string) pg.Ident {
 	if alias != "" {
 		return pg.Ident(alias + "." + column)
 	}
-	return pg.Ident(alias)
+	return pg.Ident(column)
 }
