@@ -2,10 +2,9 @@ package gopgutil
 
 import (
 	"github.com/go-pg/pg/v10"
-	"github.com/go-pg/pg/v10/types"
 )
 
-func AddAliasToColumnName(column, alias string) types.Ident {
+func AddAliasToColumnName(column, alias string) pg.Ident {
 	if alias != "" {
 		return pg.Ident(alias + "." + column)
 	}
