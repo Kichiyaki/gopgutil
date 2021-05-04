@@ -51,7 +51,9 @@ func (o OrderAppender) Apply(q *orm.Query) (*orm.Query, error) {
 				if err != nil {
 					return q, err
 				}
-				q = q.Relation(relationStr)
+				if join := tableModel.GetJoin(relationStr); join == nil {
+					q = q.Relation(relationStr + "._")
+				}
 				columnAndKeyword = alias + "." + columnAndKeyword
 			} else if hasTableAlias {
 				columnAndKeyword = tableAlias + "." + columnAndKeyword
