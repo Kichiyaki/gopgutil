@@ -1,6 +1,7 @@
 package gopgutil
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -9,7 +10,6 @@ func init() {
 }
 
 func TestBuildAliasFromRelationName(t *testing.T) {
-
 	t.Run("relation not found", func(t *testing.T) {
 		alias, err := BuildAliasFromRelationName(&testModel{}, "TestUser")
 		if err != ErrRelationNotFound {
@@ -24,6 +24,16 @@ func TestBuildAliasFromRelationName(t *testing.T) {
 		alias, err := BuildAliasFromRelationName(&testModel{}, "TestModel2.Story.Test2")
 		if err != ErrRelationNotFound {
 			t.Errorf("Expected %v, got %v", ErrRelationNotFound, err)
+		}
+		if alias != "" {
+			t.Errorf("Expected empty string, got %v", alias)
+		}
+	})
+
+	t.Run("should return an error when model = nil", func(t *testing.T) {
+		alias, err := BuildAliasFromRelationName(nil, "TestUser")
+		if err == nil || !strings.Contains(err.Error(), "Invalid model") {
+			t.Errorf("Expected error about invalid model, got %v", err)
 		}
 		if alias != "" {
 			t.Errorf("Expected empty string, got %v", alias)
