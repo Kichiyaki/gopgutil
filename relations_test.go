@@ -32,7 +32,7 @@ func TestBuildAliasFromRelationName(t *testing.T) {
 
 	t.Run("should return an error when model = nil", func(t *testing.T) {
 		alias, err := BuildAliasFromRelationName(nil, "TestUser")
-		if err == nil || !strings.Contains(err.Error(), "Invalid model") {
+		if err == nil || !strings.Contains(err.Error(), "invalid model") {
 			t.Errorf("Expected error about invalid model, got %v", err)
 		}
 		if alias != "" {

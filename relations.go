@@ -16,7 +16,7 @@ func BuildAliasFromRelationName(model interface{}, relationName string) (string,
 	default:
 		m, err := orm.NewModel(model)
 		if err != nil {
-			return "", errors.Wrap(err, "Invalid model")
+			return "", errors.Wrap(err, "invalid model")
 		}
 		tableModel = m.(orm.TableModel)
 	}
