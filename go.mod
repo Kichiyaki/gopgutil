@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/Kichiyaki/goutil v0.1.0
-	github.com/go-pg/pg/v10 v10.10.3
+	github.com/go-pg/pg/v10 v10.10.4
 	github.com/pkg/errors v0.9.1
 )
 
